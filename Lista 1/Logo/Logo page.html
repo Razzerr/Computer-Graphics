@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logo</title>
+</head>
+<body>
+<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<form>
+    <input type="text" id="commandLine">
+    <input type="button" onclick="mainFunction()" value="Submit">
+</form>
+
+
+<script src="logomocja.js"></script>
+<script>
+    var mainFunction = function (){
+        var command = document.getElementById("commandLine").value.split('(');
+        command[1] = command[1].replace(')', '');
+
+        if (actions[command[0]] === undefined) {
+            window.alert("WRONG COMMAND!");
+        } else {
+            actions[command[0]](command[1]);
+        }
+        document.getElementById("commandLine").value = "";
+    };
+</script>
+</body>
+</html>

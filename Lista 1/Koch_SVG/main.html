@@ -1,0 +1,87 @@
+<html>
+<body>
+<form>
+    <input type="text" id="commandLine">
+    <input type="button" onclick="mainFunction()" value="Draw">
+</form>
+    <svg id="myCanvas" width="800" height="800">
+        <polyline id="line" points="" style="fill:none;stroke:black;stroke-width:1"></polyline>
+    </svg>
+
+
+<script src="koch_SVG.js"></script>
+<script>
+    var maxdegree;
+    var points = [];
+    var flag = false;
+    var index = 0;
+    function mainFunction() {
+        var re = /^[0-9]+$|^$/;
+        maxdegree = document.getElementById("commandLine").value;
+
+        if (!re.test(maxdegree)) {
+            document.getElementById("commandLine").value = "WRONG DEGREE!";
+        } else {
+            var i;
+            for (i = 1; i <= maxdegree; i++) {
+                points.push(getPoints(i));
+            }
+            pollFunc(animate, 60000, 500);
+        }
+    }
+    function animate(){
+        console.log(index);
+        document.getElementById('line').setAttribute('points', points[index]);
+        if (flag === false){
+            index++;
+        } else {index--;}
+        if (index === 0){
+            flag = false;
+        } else if (index > maxdegree-1){
+            flag = true;
+            index-=2;
+        }
+    }
+    function pollFunc(fn, timeout, interval) {
+        var startTime = (new Date()).getTime();
+        interval = interval || 1000;
+
+        (function p() {
+            fn();
+            if (((new Date).getTime() - startTime ) <= timeout)  {
+                setTimeout(p, interval);
+            }
+        })();
+    }
+    function getPoints(deg) {
+        actions.RESET();
+        for (var i = 0; i < 3; i++) {
+            koch(deg, 7002);
+            actions.ROTATE(120);
+        }
+        return polyline;
+    }
+    function drawKoch(deg) {
+        for (var i = 0; i < 3; i++) {
+            koch(deg, 7002);
+            actions.ROTATE(120);
+        }
+        document.getElementById('line').setAttribute('points', polyline);
+        actions.RESET();
+    }
+    function koch(deg, len) {
+        if (deg === 0) {
+            actions.MOVE(len);
+        } else {
+            koch(deg - 1, len / 3);
+            actions.ROTATE(-60);
+            koch(deg - 1, len / 3);
+            actions.ROTATE(120);
+            koch(deg - 1, len / 3);
+            actions.ROTATE(-60);
+            koch(deg - 1, len / 3);
+        }
+    }
+</script>
+</body>
+</html>

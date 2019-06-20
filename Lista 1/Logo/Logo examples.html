@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logo</title>
+</head>
+<body>
+<canvas id="myCanvas" width="700" height="700" style="border:1px solid #000000;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<form>
+    <input type="button" onclick="blueLines()" value="Blue Lines">
+    <input type="button" onclick="redSwirls()" value="Red Swirls">
+</form>
+
+
+<script src="logomocja.js"></script>
+<script>
+    var blueLines = function(){
+        ctx.beginPath();
+        actions.RESET();
+        actions.COLOR("0000EE");
+        for(var i = 0; i < 120; i++){
+            actions.PEN_UP();
+            actions.MOVE(2000);
+            actions.ROTATE(88);
+            actions.PEN_DOWN();
+            actions.MOVE(2500);
+            actions.PEN_UP();
+            actions.ROTATE(180);
+            actions.MOVE(2500);
+            actions.ROTATE(-88);
+            actions.MOVE(2000);
+            actions.ROTATE(177);
+        }
+    };
+    var redSwirls = function(){
+        ctx.beginPath();
+        actions.RESET();
+        actions.COLOR("EE0000");
+        actions.ROTATE(180);
+        actions.MOVE(3500);
+        actions.ROTATE(180);
+        actions.PEN_DOWN();
+        for(var i = 0; i < 120; i++){
+            for(var j = 0; j<60; j++){
+                actions.MOVE(100);
+                actions.ROTATE(1);
+            }
+            actions.ROTATE(189);
+        }
+    };
+
+</script>
+</body>
+</html>

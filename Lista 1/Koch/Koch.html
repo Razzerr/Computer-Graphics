@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logo</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+<form>
+    <input type="text" id="commandLine">
+    <input type="button" onclick="mainFunction()" value="Draw">
+</form>
+
+
+<script src="koch.js"></script>
+<script>
+    var mainFunction = function () {
+        var re = /^[0-9]+$|^$/;
+        var degree = document.getElementById("commandLine").value;
+
+        if (!re.test(degree)) {
+            document.getElementById("commandLine").value = "WRONG DEGREE!";
+        } else {
+            drawKoch(degree);
+        }
+    };
+    var drawKoch = function (deg) {
+        actions.RESET();
+        actions.PEN_DOWN();
+        for (var i = 0; i < 3; i++) {
+            koch(deg, 7002);
+            actions.ROTATE(120);
+        }
+    };
+    var koch = function (deg, len) {
+        if (deg === 0) {
+            actions.MOVE(len);
+        } else {
+            koch(deg - 1, len / 3);
+            actions.ROTATE(-60);
+            koch(deg - 1, len / 3);
+            actions.ROTATE(120);
+            koch(deg - 1, len / 3);
+            actions.ROTATE(-60);
+            koch(deg - 1, len / 3);
+        }
+    };
+</script>
+</body>
+</html>
